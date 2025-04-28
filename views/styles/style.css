@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Monterat:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Monterat', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #f1f1f1;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 360px;
+    transition: all 0.3s ease;
+}
+
+h2 {
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.form {
+    display: none;
+}
+
+.form.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #b0b0b0;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #f1f1f1;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-group button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.form-group button:active {
+    transform: scale(1);
+}
+
+.toggle-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+    color: #007bff;
+    font-weight: 500;
+}
+
+.toggle-link:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+}
