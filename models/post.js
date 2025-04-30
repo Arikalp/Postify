@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 
-
-const userSchema = new mongoose.Schema({
-    post: [{
+// Define the Post schema
+const postSchema = new mongoose.Schema({
+    content: String,
+    user: { // Reference to the UserModel
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'post'
-    }]
+        ref: 'UserModel'
+    },
+    createdAt: { type: Date, default: Date.now }
 });
 
-const Postmodel = mongoose.model('Postmodel', userSchema);
+// Register the model with the name "post"
+const Postmodel = mongoose.model('post', postSchema);
 
 module.exports = Postmodel;
+
+
