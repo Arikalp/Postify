@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+  background: url('/images/pexels-adrien-olichon-1257089-3709430.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Orbitron', sans-serif;
+  color: #e2e8f0;
+}
+
+.blurred-card {
+  background-color: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blurred-nav {
+  background-color: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-gradient {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  transition: background 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  transform: translateY(-2px);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+.btn-red-gradient {
+  background: linear-gradient(to right, #dc2626, #ef4444);
+  transition: background 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.btn-red-gradient:hover {
+  background: linear-gradient(to right, #b91c1c, #dc2626);
+  transform: translateY(-2px);
+}
+
+.btn-red-gradient:active {
+  transform: translateY(0);
+}
+
+.link-like {
+  color: #93c5fd;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.link-like:hover {
+  color: #ffffff;
+}
+
+.link-delete {
+  color: #fca5a5;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.link-delete:hover {
+  color: #fee2e2;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  background-color: rgba(55, 65, 81, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: #60a5fa;
+  background-color: rgba(55, 65, 81, 0.9);
+  outline: none;
+  box-shadow: none;
+} 

@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.render("index", { title: "Home" });
@@ -25,9 +25,11 @@ app.get("/login", (req, res) => {
 app.get("/profile", isloggedIn, async (req, res) => {
   try {
     // Fetch the user and populate the 'post' field
-    const user = await UserModel.findOne({ username: req.user.username }).populate({
-      path: 'post',
-      populate: { path: 'user', select: 'username' } // Populate the 'user' field in each post
+    const user = await UserModel.findOne({
+      username: req.user.username,
+    }).populate({
+      path: "post",
+      populate: { path: "user", select: "username" }, // Populate the 'user' field in each post
     });
 
     if (!user) {
@@ -41,8 +43,6 @@ app.get("/profile", isloggedIn, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-
 
 app.post("/register", (req, res) => {
   const { username, email, password } = req.body;
@@ -68,7 +68,8 @@ app.post("/register", (req, res) => {
 
   let token = jwt.sign({ email, password }, "Arikalp");
   res.cookie("token", token);
-  res.send("User registered successfully!");
+  console.log("User registered successfully!");
+  res.redirect("/profile");
 });
 
 app.post("/login", async (req, res) => {
@@ -85,7 +86,10 @@ app.post("/login", async (req, res) => {
   }
 
   console.log("Login successful!");
-  let token = jwt.sign({ username: user.username, email: user.email }, "Arikalp");
+  let token = jwt.sign(
+    { username: user.username, email: user.email },
+    "Arikalp"
+  );
   res.cookie("token", token, { httpOnly: true });
   console.log("User logged in successfully!");
   res.redirect("/profile");
@@ -105,7 +109,7 @@ app.post("/create-post", isloggedIn, async (req, res) => {
     const newPost = new Postmodel({
       content,
       user: req.user._id, // Use the user's ID from req.user
-      createdAt: new Date()
+      createdAt: new Date(),
     });
 
     await newPost.save();
@@ -123,6 +127,49 @@ app.post("/create-post", isloggedIn, async (req, res) => {
   }
 });
 
+app.get("/delete-post/:id", isloggedIn, async (req, res) => {
+  try {
+    let postId = req.params.id;
+    let post = await Postmodel.findOneAndDelete({ _id: postId });
+    if (!post) {
+      return res.status(404).send("Post not found");
+    } else {
+      console.log("Post deleted successfully!");
+      res.redirect("/profile");
+    }
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).send("Error deleting post");
+  }
+});
+
+app.get("/like/:id", isloggedIn , async (req,res) => {
+  try{
+    let postId=req.params.id;
+    let post=await Postmodel.findOne({_id:postId});
+
+    if(!post){
+      return res.status(404).send("Post not found");
+    }
+    let userId=req.user._id;
+    
+    if(post.likes.includes(userId)){
+      post.likes.pull(userId);
+      console.log("Post unliked successfully!");
+    }
+    else{
+      post.likes.push(userId);
+      console.log("Post liked successfully!");  
+    }
+    await post.save();
+    res.redirect("/profile");
+  }
+  catch(error){
+    console.error("Error liking/unliking post:", error);
+    res.status(500).send("Error liking/unliking post");
+  }
+  
+  })
 
 function isloggedIn(req, res, next) {
   const token = req.cookies.token;

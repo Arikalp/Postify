@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('/images/pexels-adrien-olichon-1257089-3709430.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+}
+
+.login-container {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #e0e0e0;
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #60a5fa;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+button {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(to right, #3b82f6, #60a5fa);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    transition: background 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+button:hover {
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+h1 {
+    text-align: center;
+    color: #bfdbfe;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+::placeholder {
+    color: #a0aec0;
+}
+
+a {
+    color: #93c5fd;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+} 

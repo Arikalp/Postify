@@ -7,6 +7,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel'
     },
+    likes: [{ // Array of references to the UserModel for likes
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
     createdAt: { type: Date, default: Date.now }
 });
 
