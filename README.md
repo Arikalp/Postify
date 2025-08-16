@@ -18,7 +18,7 @@ A simple social media application built with Node.js, Express, MongoDB, and EJS.
 
 2. Set up environment variables:
    ```bash
-   MONGODB_URI=mongodb+srv://sankalpkrsaini:06nFwURc4rNOkBPN@postify.hzcjpkr.mongodb.net/?retryWrites=true&w=majority&appName=postify
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database_name
    JWT_SECRET=your_secret_key
    ```
 

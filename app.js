@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cookieParser = require("cookie-parser");
-const bycrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const UserModel = require("./models/user");
@@ -13,8 +13,11 @@ const PORT = process.env.PORT || 3000;
 // MongoDB Connection
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://sankalpkrsaini:06nFwURc4rNOkBPN@postify.hzcjpkr.mongodb.net/?retryWrites=true&w=majority&appName=postify';
-    await mongoose.connect(mongoURI);
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI environment variable is required');
+    }
+    
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB connected successfully');
     
     // Only start server after MongoDB is connected
@@ -82,32 +85,40 @@ app.get("/profile", isloggedIn, async (req, res) => {
   }
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (UserModel.findOne({ email })) {
-    console.log("User already exists");
-  }
-
-  bycrypt.hash(password, 10, async (err, hash) => {
-    if (err) {
-      return res.status(500).send("Error hashing password");
+  try {
+    // Check if user already exists (by email or username)
+    const existingUser = await UserModel.findOne({ 
+      $or: [{ email }, { username }] 
+    });
+    if (existingUser) {
+      console.log("User already exists");
+      return res.status(400).send("User already exists");
     }
 
-    const newUser = await new UserModel({
+    // Hash password
+    const hash = await bcrypt.hash(password, 10);
+    
+    // Create new user
+    const newUser = new UserModel({
       username,
       email,
       password: hash,
     });
 
-    console.log(newUser);
     await newUser.save();
-  });
+    console.log("User registered successfully!");
 
-  let token = jwt.sign({ email, password }, "Arikalp");
-  res.cookie("token", token);
-  console.log("User registered successfully!");
-  res.redirect("/profile");
+    // Generate token and set cookie
+    let token = jwt.sign({ email, username }, "Arikalp");
+    res.cookie("token", token);
+    res.redirect("/profile");
+  } catch (error) {
+    console.error("Registration error:", error);
+    res.status(500).send("Error during registration");
+  }
 });
 
 app.post("/login", async (req, res) => {
@@ -118,7 +129,7 @@ app.post("/login", async (req, res) => {
     return res.status(401).send("Invalid username or password");
   }
 
-  const isPasswordValid = await bycrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     return res.status(401).send("Invalid username or password");
   }
