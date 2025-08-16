@@ -8,6 +8,21 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("./models/user");
 const Postmodel = require("./models/post");
 
+// MongoDB Connection
+const connectDB = async () => {
+  try {
+    const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://sankalpkrsaini:06nFwURc4rNOkBPN@postify.hzcjpkr.mongodb.net/?retryWrites=true&w=majority&appName=postify';
+    await mongoose.connect(mongoURI);
+    console.log('MongoDB connected successfully');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    process.exit(1);
+  }
+};
+
+// Connect to MongoDB
+connectDB();
+
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -188,6 +203,6 @@ function isloggedIn(req, res, next) {
   }
 }
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });

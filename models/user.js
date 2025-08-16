@@ -1,13 +1,5 @@
 const mongoose = require('mongoose');
 
-try {
-    mongoose.connect('mongodb://localhost:27017/miniproject1');
-    console.log('MongoDB connected successfully');
-}
-catch (error) { 
-    console.error('MongoDB connection error:', error);
-}
-
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
