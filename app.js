@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("./models/user");
 const Postmodel = require("./models/post");
 
+const PORT = process.env.PORT || 3000;
+
 // MongoDB Connection
 const connectDB = async () => {
   try {
@@ -203,6 +205,7 @@ function isloggedIn(req, res, next) {
   }
 }
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(PORT, () => {
+  console.log(`✅ Server is running on port ${PORT}`);
 });
+
