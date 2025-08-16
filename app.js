@@ -16,10 +16,21 @@ const connectDB = async () => {
     const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://sankalpkrsaini:06nFwURc4rNOkBPN@postify.hzcjpkr.mongodb.net/?retryWrites=true&w=majority&appName=postify';
     await mongoose.connect(mongoURI);
     console.log('MongoDB connected successfully');
+    
+    // Only start server after MongoDB is connected
+    startServer();
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);
   }
+};
+
+// Start server function
+const startServer = () => {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server is running on port ${PORT}`);
+    console.log(`🌐 Server accessible at: http://localhost:${PORT}`);
+  });
 };
 
 // Connect to MongoDB
@@ -30,6 +41,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
+
+// Health check endpoint for Render
+app.get("/health", (req, res) => {
+  res.status(200).json({ 
+    status: "OK", 
+    message: "Server is running", 
+    timestamp: new Date().toISOString(),
+    port: PORT
+  });
+});
 
 app.get("/", (req, res) => {
   res.render("index", { title: "Home" });
@@ -205,7 +226,5 @@ function isloggedIn(req, res, next) {
   }
 }
 
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-});
+
 
