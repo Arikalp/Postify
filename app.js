@@ -9,6 +9,11 @@ const UserModel = require("./models/user");
 const Postmodel = require("./models/post");
 
 const PORT = process.env.PORT || 3000;
+console.log('Environment check:', {
+  PORT: process.env.PORT,
+  NODE_ENV: process.env.NODE_ENV,
+  MONGODB_URI: process.env.MONGODB_URI ? 'SET' : 'NOT SET'
+});
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -30,9 +35,16 @@ const connectDB = async () => {
 
 // Start server function
 const startServer = () => {
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Server is running on port ${PORT}`);
-    console.log(`🌐 Server accessible at: http://localhost:${PORT}`);
+    console.log(`🌐 Server accessible at http://localhost:${PORT}`);
+    console.log(`🔍 Render should detect port: ${PORT}`);
+  });
+  
+  // Handle server errors
+  server.on('error', (error) => {
+    console.error('Server error:', error);
+    process.exit(1);
   });
 };
 
