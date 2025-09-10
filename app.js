@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -23,7 +24,7 @@ const connectDB = async () => {
     }
     
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected successfully');
+    console.log('MongoDB Atlas connected successfully');
     
     // Only start server after MongoDB is connected
     startServer();
@@ -159,7 +160,7 @@ app.post("/login", async (req, res) => {
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   console.log("User logged out successfully!");
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 app.post("/create-post", isloggedIn, async (req, res) => {
